@@ -2,7 +2,34 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-// Your JavaScript code goes here!
+document.addEventListener('DOMContentLoaded', () => {
+  const hearts = document.querySelectorAll('span.like-glyph')
+  heartPost(hearts);
+})
+
+const heartPost = (hearts) => {
+  for (const heart of hearts) { // selecting each heart
+    heart.addEventListener('click', (e) => {
+      mimicServerCall()
+      //promises have the .then()
+      .then(() => { // the second .then in fetch that is doing something with the response because .json() cannnot be called on a string, only objects
+      if(heart.innerHTML == EMPTY_HEART) {
+        heart.innerHTML = FULL_HEART
+        heart.className = "activated-heart"
+      } else {
+        heart.innerHTML = EMPTY_HEART
+        heart.className = "like-glyph"
+      }  
+    })
+    .catch(() => {
+      document.getElementById('modal').className = 'show'
+    })
+    setTimeout(() => {
+      document.getElementById('modal').className = 'hidden'}, 3000)
+    })
+  }
+}
+
 
 
 
